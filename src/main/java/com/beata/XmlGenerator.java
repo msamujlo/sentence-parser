@@ -42,12 +42,18 @@ public class XmlGenerator {
 
      public void marshalSentence(Sentence sentence) throws JAXBException {
 
+         Marshaller marshaller = createMarshaller();
+         marshaller.marshal(sentence,outputStream );
+     }
+
+    private Marshaller createMarshaller() throws JAXBException {
+
         JAXBContext jaxbContext = JAXBContext.newInstance(Sentence.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(sentence,outputStream );
-     }
+        return marshaller;
+    }
 
     public void closeXmlDocument() throws IOException{
 
