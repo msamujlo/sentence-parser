@@ -8,7 +8,7 @@ import java.io.*;
 public class XmlGenerator {
 
 
-    FileOutputStream outputStream;
+    private FileOutputStream outputStream;
 
 
     public XmlGenerator() throws IOException {
