@@ -41,8 +41,8 @@ public class XmlGenerator {
          outputStream.write(openingTag.getBytes());
      }
 
+    public void marshalSentence(Sentence sentence) throws JAXBException, IOException {
 
-     public void marshalSentence(Sentence sentence) throws JAXBException, IOException {
         StringWriter stringWriter = new StringWriter();
 
         Marshaller marshaller = createMarshaller();
@@ -50,7 +50,7 @@ public class XmlGenerator {
         String sentenceXml = stringWriter.toString() + "\n";
         outputStream.write(sentenceXml.getBytes());
 
-     }
+    }
 
     private Marshaller createMarshaller() throws JAXBException {
 
