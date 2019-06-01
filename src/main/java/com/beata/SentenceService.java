@@ -27,7 +27,7 @@ public class SentenceService {
         csvGenerator.deleteIfCsvFilesAlreadyExist();
     }
 
-    public void processSentence(String line) throws JAXBException {
+    public void processSentence(String line) throws JAXBException, IOException {
 
         List<String> wordsList = Arrays.asList(splitLineIntoWords(cleanLine(line)));
 
@@ -57,7 +57,7 @@ public class SentenceService {
 
     }
 
-    private void buildSentenceOutput(String word) throws JAXBException{
+    private void buildSentenceOutput(String word) throws JAXBException, IOException{
 
         final String REGEX_END_OF_SENTENCE = "(.+)([.!?])";
 
@@ -72,7 +72,7 @@ public class SentenceService {
     }
 
 
-    private void finalizeSentence() throws JAXBException{
+    private void finalizeSentence() throws JAXBException, IOException {
 
         Collections.sort(sentence.getWords(), String.CASE_INSENSITIVE_ORDER);
         setCounters();
@@ -105,7 +105,7 @@ public class SentenceService {
         }
     }
 
-    private void saveSentenceToXml(Sentence sentence) throws JAXBException{
+    private void saveSentenceToXml(Sentence sentence) throws JAXBException, IOException{
 
         xmlGenerator.marshalSentence(sentence);
 

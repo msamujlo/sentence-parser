@@ -9,6 +9,7 @@ public class XmlGenerator {
 
 
     private FileOutputStream outputStream;
+    File file;
 
 
     public XmlGenerator() throws IOException {
@@ -18,9 +19,10 @@ public class XmlGenerator {
 
     private void createXmlFile() throws IOException {
 
-        File file = new File("out.xml");
+        file = new File("out.xml");
 
         deleteFileIfExists(file);
+
         outputStream = new FileOutputStream(file, true);
      }
 
@@ -40,10 +42,14 @@ public class XmlGenerator {
      }
 
 
-     public void marshalSentence(Sentence sentence) throws JAXBException {
+     public void marshalSentence(Sentence sentence) throws JAXBException, IOException {
+        StringWriter stringWriter = new StringWriter();
 
-         Marshaller marshaller = createMarshaller();
-         marshaller.marshal(sentence,outputStream );
+        Marshaller marshaller = createMarshaller();
+        marshaller.marshal(sentence,outputStream);
+        String sentenceXml = stringWriter.toString() + "\n";
+        outputStream.write(sentenceXml.getBytes());
+
      }
 
     private Marshaller createMarshaller() throws JAXBException {
@@ -51,7 +57,6 @@ public class XmlGenerator {
         JAXBContext jaxbContext = JAXBContext.newInstance(Sentence.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         return marshaller;
     }
 
