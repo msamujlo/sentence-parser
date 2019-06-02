@@ -4,6 +4,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.*;
 
+// xmlGenerator and csvGenerator are tightly coupled to sentence service
 public class SentenceService {
 
     private Integer sentenceCounter;
@@ -62,6 +63,8 @@ public class SentenceService {
         final String REGEX_END_OF_SENTENCE = "(.+)([.!?])";
 
         if(!word.matches(REGEX_END_OF_SENTENCE)){
+            // Don't modify inner datastructures directly.
+            // It would be better to add specialized method like sentence.add(word)
             sentence.getWords().add(word);
         } else if(isWordAbbreviation(word)) {
             sentence.getWords().add(word);
@@ -119,6 +122,7 @@ public class SentenceService {
         try {
             csvGenerator.saveToCsv(line);
         } catch (IOException e) {
+            // don't ignore exceptions
             e.printStackTrace();
         }
     }
